@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Employee management System </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        .container{
+            max-width: 520px;
+            margin: auto;
+            margin-top: 100px;
+            font-family: sans-serif;
+        }
+        h1{
+            margin-bottom: 30px;
+        }
+        input,
+        textarea{
+            width: calc(100% - 20px);
+            display: block;
+            padding: 6px;
+            font-size: 20px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            outline: none;
+        }
+        textarea{
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid p-5 bg-primary text-white text-center">
+        <h1>Employee management system</h1>
+      </div>
+    <div class="container">
+        
+        <div class="form" >
+            <label class="form-label" placeholder="Enter username" name="uname" required>Name</label>
+            <div class="valid-feedback">Valid.</div>
+            <div class="invalid-feedback">Please fill out this field.</div>
+            </div>
+
+            <input type="text" class="form-control">
+            <label class="form-label">Email</label>
+            <input type="text" class="form-control">
+            <label class="form-label">Message</label>
+            <textarea class="form-control"></textarea>
+            <button class="btn btn-primary">Submit</button>
+            <button class="btn btn-primary" onclick="go()">Database</button>
+        </div>
+    </div>
+
+<script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-database-compat.js"></script>
+
+<script>
+    function go(){
+        window.location.href="index.html"
+    }
+    const firebaseConfig = {
+        databaseURL: "https://for-yt-1ec52-default-rtdb.asia-southeast1.firebasedatabase.app/"
+    }
+    firebase.initializeApp(firebaseConfig)
+  
+    const database = firebase.database()
+
+   
+    const submit = document.querySelector('button')
+    submit.onclick = () => sendData()
+
+    
+    function sendData(){
+        var name = document.querySelectorAll('input')[0]
+        var email = document.querySelectorAll('input')[1]
+        var message = document.querySelector('textarea')
+
+        
+        var listRef = database.ref('messages/')
+        
+        var newRef = listRef.push()
+      
+        newRef.set({
+            
+            'name': name.value,
+            'email': email.value,
+            'message': message.value
+        })
+    }
+</script>
+</body>
+</html>
